@@ -10,3 +10,10 @@ Route::get('/', function () {
 
 Route::resource('books', BukuController::class);
 Route::resource('members', MemberController::class);
+
+// --- TUGAS PERTEMUAN 2: Route Group /admin ---
+Route::prefix('admin')->group(function () {
+    Route::get('/info', function () {
+        return 'Halaman Informasi Admin Perpustakaan Digital';
+    });
+});
