@@ -3,31 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Aplikasi Perpustakaan')</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Aplikasi Perpustakaan</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-light">
 
-    <!-- Header / Navbar -->
-    <nav class="bg-blue-600 text-white p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">Perpustakaan Digital</h1>
-            <ul class="flex space-x-4">
-                <li><a href="/" class="hover:underline">Home</a></li>
-                <li><a href="/buku" class="hover:underline">Daftar Buku</a></li>
-            </ul>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Perpustakaan Digital</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white me-3" href="{{ url('/') }}">Home</a>
+                <a class="nav-link text-white me-3" href="{{ route('books.index') }}">Daftar Buku</a>
+                <a class="nav-link text-white" href="{{ route('members.index') }}">Daftar Anggota</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Konten Utama -->
-    <main class="container mx-auto flex-1 p-6">
+    <!-- Content -->
+    <main class="container my-4">
         @yield('content')
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center p-4">
-        <p>&copy; {{ date('Y') }} Perpustakaan Digital - D4 Teknik Informatika</p>
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p class="mb-0">&copy; {{ date('Y') }} Perpustakaan Digital - D4 Teknik Informatika</p>
     </footer>
 
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

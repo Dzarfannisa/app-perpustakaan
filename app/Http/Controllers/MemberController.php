@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Member;
 use App\Http\Requests\StoreMemberRequest;
 
 class MemberController extends Controller
 {
     public function index()
     {
-        return view('members.index');
+        $members = Member::all();
+        return view('members.index', compact('members'));
     }
 
     public function create()
@@ -18,6 +20,7 @@ class MemberController extends Controller
 
     public function store(StoreMemberRequest $request)
     {
-        return redirect()->route('members.index')->with('success', 'Data anggota berhasil disimpan!');
+        Member::create($request->validated());
+        return redirect()->route('members.index')->with('success', 'Anggota berhasil disimpan ke database!');
     }
 }
