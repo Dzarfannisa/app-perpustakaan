@@ -9,6 +9,7 @@ class MemberController extends Controller
 {
     public function index()
     {
+        // Ambil semua data anggota dari database
         $members = Member::all();
         return view('members.index', compact('members'));
     }
@@ -20,7 +21,9 @@ class MemberController extends Controller
 
     public function store(StoreMemberRequest $request)
     {
+        // Simpan data inputan ke database
         Member::create($request->validated());
-        return redirect()->route('members.index')->with('success', 'Anggota berhasil disimpan ke database!');
+
+        return redirect()->route('members.index')->with('success', 'Anggota berhasil ditambahkan!');
     }
 }

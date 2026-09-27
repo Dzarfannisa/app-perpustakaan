@@ -21,6 +21,7 @@ class BukuController extends Controller
     public function store(StoreBookRequest $request)
     {
         Book::create($request->validated());
-        return redirect()->route('books.index')->with('success', 'Buku berhasil disimpan ke database!');
+
+        return redirect()->route('books.index')->with('success', 'Buku berhasil disimpan!');
     }
 }
