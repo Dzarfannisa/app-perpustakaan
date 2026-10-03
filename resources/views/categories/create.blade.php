@@ -3,33 +3,37 @@
 @section('title', 'Tambah Kategori')
 
 @section('content')
-<div class="mb-3">
-    <a href="{{ route('categories.index') }}" class="btn btn-secondary btn-sm">
-        &larr; Kembali ke daftar
-    </a>
-</div>
+    <p><a href="{{ route('categories.index') }}" class="btn">&larr; Kembali ke daftar</a></p>
 
-<div class="card shadow-sm p-4">
-    <h2 class="h4 text-primary mb-3">Tambah Kategori Baru</h2>
+    <div class="card" style="padding: 20px; background: #fff; border-radius: 8px; border: 1px solid #ddd;">
+        <h2>Tambah Kategori Baru</h2>
 
-    @include('partials.alert')
+        @if ($errors->any())
+            <div style="color: red; margin-bottom: 15px;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    <form action="{{ route('categories.store') }}" method="POST">
-        @csrf
+        <form action="{{ route('categories.store') }}" method="POST">
+            @csrf
 
-        <div class="mb-3">
-            <label for="name" class="form-label">Nama Kategori</label>
-            <input type="text" 
-                   class="form-control @error('name') is-invalid @enderror" 
-                   id="name" 
-                   name="name" 
-                   value="{{ old('name') }}">
-            @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
+            <div style="margin-bottom: 15px;">
+                <label for="nama_kategori" style="display: block; margin-bottom: 5px;">Nama Kategori</label>
+                <input type="text" 
+                       name="nama_kategori" 
+                       id="nama_kategori" 
+                       value="{{ old('nama_kategori') }}" 
+                       required 
+                       style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
-    </form>
-</div>
+            <button type="submit" style="background-color: #0d6efd; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">
+                Simpan
+            </button>
+        </form>
+    </div>
 @endsection

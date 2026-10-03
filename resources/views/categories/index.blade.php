@@ -24,7 +24,7 @@
             <tbody>
                 @forelse($categories as $index => $category)
                 <tr>
-                    <td>{{ $categories->firstItem() + $index }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $category->name }}</td>
                     <td><span class="badge bg-info text-dark">{{ $category->books_count }}</span></td>
                     <td>

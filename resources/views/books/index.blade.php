@@ -3,56 +3,48 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
-<div class="card shadow-sm p-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h4 text-primary m-0">Daftar Buku</h2>
-        <a href="{{ route('books.create') }}" class="btn btn-primary">+ Tambah Buku Baru</a>
-    </div>
+    <h1>Daftar Buku</h1>
 
-    @include('partials.alert')
+    <p><a href="{{ route('books.create') }}" class="btn">+ Tambah Buku</a></p>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover border">
-            <thead class="table-dark">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Judul</th>
+                <th>Penulis</th>
+                <th>Kategori</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($books as $book)
                 <tr>
-                    <th width="50">No</th>
-                    <th>Judul Buku</th>
-                    <th>Penulis</th>
-                    <th>Kategori</th>
-                    <th width="180">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($books as $index => $book)
-                <tr>
-                    <td>{{ $books->firstItem() + $index }}</td>
-                    <td>{{ $book->title }}</td>
-                    <td>{{ $book->author }}</td>
+                    <td>{{ $book['id'] }}</td>
+                    <td>{{ $book['title'] }}</td>
+                    <td>{{ $book['author'] }}</td>
+                    <td>{{ $book['category']['nama_kategori'] ?? $book['category']['name'] ?? '-' }}</td>
+                    <td>{{ $book['stok'] }}</td>
                     <td>
-                        <span class="badge bg-secondary">
-                            {{ $book->category ? $book->category->name : 'Tanpa Kategori' }}
-                        </span>
-                    </td>
-                    <td>
-                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus buku ini?')">
+                        <a href="{{ route('books.show', $book['id']) }}">Detail</a>
+                        |
+                        <a href="{{ route('books.edit', $book['id']) }}">Edit</a>
+                        |
+                        <form class="inline" action="{{ route('books.destroy', $book['id']) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm">Hapus</button>
+                            <button type="submit">Hapus</button>
                         </form>
                     </td>
                 </tr>
-                @empty
+            @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted">Belum ada data buku.</td>
+                    <td colspan="6">Belum ada data buku.</td>
                 </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+            @endforelse
+        </tbody>
+    </table>
 
-    <div class="mt-3">
-        {{ $books->links() }}
-    </div>
-</div>
+    {{ $books->links() }}
 @endsection

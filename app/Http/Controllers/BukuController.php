@@ -10,10 +10,16 @@ use Illuminate\Http\Request;
 class BukuController extends Controller
 {
     public function index()
-    {
-        $books = Book::with('category')->latest()->paginate(10);
-        return view('books.index', compact('books'));
-    }
+{
+    $books = Book::with('category')->paginate(10);
+    return view('books.index', compact('books'));
+}
+
+public function show(string $id)
+{
+    $book = Book::with('category')->findOrFail($id);
+    return view('books.show', compact('book'));
+}
 
     public function create()
     {

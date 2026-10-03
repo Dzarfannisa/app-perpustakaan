@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::withCount('books')->latest()->paginate(10);
+        $categories = Category::latest()->paginate(10);
         return view('categories.index', compact('categories'));
     }
 
@@ -18,36 +18,17 @@ class CategoryController extends Controller
         return view('categories.create');
     }
 
+    // Method store ditaruh di sini (di dalam class):
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
-        ]);
+{
+    $request->validate([
+        'nama_kategori' => 'required|string|max:255',
+    ]);
 
-        Category::create($request->only('name'));
+    Category::create([
+        'name' => $request->nama_kategori, // Petakan nama_kategori ke kolom 'name' di database
+    ]);
 
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan!');
-    }
-
-    public function edit(Category $category)
-    {
-        return view('categories.edit', compact('category'));
-    }
-
-    public function update(Request $request, Category $category)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-        ]);
-
-        $category->update($request->only('name'));
-
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil diperbarui!');
-    }
-
-    public function destroy(Category $category)
-    {
-        $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus!');
-    }
+    return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan!');
+}
 }
